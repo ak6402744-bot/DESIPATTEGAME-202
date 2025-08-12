@@ -1,1 +1,78 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Desi Patte Game</title>
+    <style>
+        body {
+            background-color: #0b3d0b;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: gold;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: gold;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .card {
+            font-size: 50px;
+            margin: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎴 Desi Patte Game 🎴</h1>
+    <p>Click to draw 2 cards, highest wins!</p>
+    <div id="cards"></div>
+    <h2 id="result"></h2>
+    <button onclick="playGame()">Draw Cards</button>
+
+    <script>
+        const suits = ["♠", "♥", "♣", "♦"];
+        const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"];
+
+        function getRandomCard() {
+            let suit = suits[Math.floor(Math.random() * suits.length)];
+            let value = values[Math.floor(Math.random() * values.length)];
+            return { value, suit };
+        }
+
+        function cardValue(card) {
+            if (card.value === "J") return 11;
+            if (card.value === "Q") return 12;
+            if (card.value === "K") return 13;
+            if (card.value === "A") return 14;
+            return card.value;
+        }
+
+        function playGame() {
+            let player1 = getRandomCard();
+            let player2 = getRandomCard();
+
+            document.getElementById("cards").innerHTML = `
+                <div class="card">${player1.value}${player1.suit}</div>
+                VS
+                <div class="card">${player2.value}${player2.suit}</div>
+            `;
+
+            if (cardValue(player1) > cardValue(player2)) {
+                document.getElementById("result").innerText = "🏆 Player 1 Wins!";
+            } else if (cardValue(player1) < cardValue(player2)) {
+                document.getElementById("result").innerText = "🏆 Player 2 Wins!";
+            } else {
+                document.getElementById("result").innerText = "🤝 It's a Tie!";
+            }
+        }
+    </script>
+</body>
+</html>
